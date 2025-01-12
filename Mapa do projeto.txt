@@ -1,0 +1,23 @@
+print-service/
+│
+├── src/
+│   ├── config/
+│   │   ├── app.config.js
+│   │   └── printer.config.js
+│   │
+│   ├── controllers/
+│   │   ├── printer.controller.js
+│   │   └── job.controller.js
+│   │
+│   ├── services/
+│   │   └── printer.service.js
+│   │
+│   └── utils/
+│       └── format.utils.js
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── README.md
+└── server.js

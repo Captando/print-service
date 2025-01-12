@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "b5e7b8d9-c6a4-4e5f-8d3a-2f8e9b4c7d6a",
+		"name": "Print Service",
+		"description": "Serviço completo de impressão com suporte a A4 e impressoras térmicas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Impressoras",
+			"item": [
+				{
+					"name": "Listar Impressoras",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/printers",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["printers"]
+						},
+						"description": "Lista todas as impressoras do sistema"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Impressão A4",
+			"item": [
+				{
+					"name": "Imprimir Documento A4 Simples",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"printerName\": \"Microsoft Print to PDF\",\n    \"content\": \"Teste de impressão em A4\\nLinha 2 do documento\\nLinha 3 do documento\",\n    \"format\": {\n        \"paperType\": \"A4\",\n        \"header\": \"Cabeçalho do Documento\",\n        \"footer\": \"Rodapé do Documento\"\n    },\n    \"filename\": \"documento_simples.pdf\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/print",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["print"]
+						},
+						"description": "Imprime um documento A4 simples"
+					},
+					"response": []
+				},
+				{
+					"name": "Imprimir Relatório A4 Formatado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"printerName\": \"Microsoft Print to PDF\",\n    \"content\": \"[center][large]RELATÓRIO DE VENDAS[/large][/center]\\n\\n[b]Período:[/b] Janeiro/2025\\n\\n[center]=================[/center]\\n\\nVendas por categoria:\\n\\n[b]Eletrônicos:[/b] R$ 15.000,00\\n[b]Vestuário:[/b] R$ 8.500,00\\n[b]Alimentos:[/b] R$ 12.300,00\\n\\n[center]=================[/center]\\n\\n[right][b]Total Geral: R$ 35.800,00[/b][/right]\",\n    \"format\": {\n        \"paperType\": \"A4\",\n        \"header\": \"EMPRESA EXEMPLO LTDA\",\n        \"footer\": \"Gerado em 12/01/2025\"\n    },\n    \"filename\": \"relatorio_vendas.pdf\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/print",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["print"]
+						},
+						"description": "Imprime um relatório A4 com formatação"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Impressão Térmica",
+			"item": [
+				{
+					"name": "Imprimir Cupom Simples",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"printerName\": \"EPSON TM-T20\",\n    \"content\": \"[center]CUPOM NÃO FISCAL[/center]\\n\\n[b]Item:[/b] Produto Teste\\n[b]Valor:[/b] R$ 10,00\\n\\n[center]---------------[/center]\\n\\n[right]Total: R$ 10,00[/right]\\n\\n[feed=2]\\n[center]Obrigado e volte sempre![/center]\\n[cut]\",\n    \"format\": {\n        \"paperType\": \"THERMAL\",\n        \"header\": \"LOJA TESTE\",\n        \"cutAtEnd\": true\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/print",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["print"]
+						},
+						"description": "Imprime um cupom térmico simples"
+					},
+					"response": []
+				},
+				{
+					"name": "Imprimir Cupom Fiscal Completo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"printerName\": \"EPSON TM-T20\",\n    \"content\": \"[center][double]CUPOM FISCAL[/double][/center]\\n[feed=1]\\n[b]Pedido:[/b] #12345\\n[b]Data:[/b] 12/01/2025 14:30\\n\\n[center]-------------------[/center]\\n\\n[b]ITENS DO PEDIDO[/b]\\n\\n1x Hamburguer     R$ 25,00\\n   [u]Adicionais:[/u]\\n   + Bacon        R$  4,00\\n   + Queijo       R$  2,00\\n\\n1x Batata G      R$ 15,00\\n1x Refrigerante  R$  8,00\\n\\n[center]-------------------[/center]\\n\\n[b]Subtotal:[/b]     R$ 54,00\\n[b]Taxa Entrega:[/b] R$  6,00\\n[right][large]Total: R$ 60,00[/large][/right]\\n\\n[feed=2]\\n[center]* * * * *[/center]\\n[center]Pedido Confirmado[/center]\\n[center]* * * * *[/center]\\n\\n[feed=3]\\n[drawer]\\n[cut]\",\n    \"format\": {\n        \"paperType\": \"THERMAL\",\n        \"header\": \"RESTAURANTE EXEMPLO\",\n        \"footer\": \"Volte Sempre!\",\n        \"cutAtEnd\": true\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/print",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["print"]
+						},
+						"description": "Imprime um cupom fiscal completo com formatação"
+					},
+					"response": []
+				},
+				{
+					"name": "Imprimir Comanda",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"printerName\": \"EPSON TM-T20\",\n    \"content\": \"[center][large]COMANDA #123[/large][/center]\\n[feed=1]\\n[b]Mesa:[/b] 15\\n[b]Garçom:[/b] Carlos\\n[b]Abertura:[/b] 12/01 14:30\\n\\n[center]-------------------[/center]\\n\\n[b]PEDIDOS[/b]\\n\\n[u]14:35[/u]\\n2x Cerveja 600ml\\n1x Porção Fritas\\n\\n[u]15:10[/u]\\n1x Porção Isca\\n2x Refrigerante\\n\\n[center]-------------------[/center]\\n\\n[right][b]Consumo: R$ 132,00[/b][/right]\\n\\n[feed=2]\\n[center]Conta Parcial[/center]\\n[center]Não é documento fiscal[/center]\\n\\n[feed=3]\\n[cut]\",\n    \"format\": {\n        \"paperType\": \"THERMAL\",\n        \"header\": \"BAR & RESTAURANTE\",\n        \"cutAtEnd\": true\n    }\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/print",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["print"]
+						},
+						"description": "Imprime uma comanda de bar/restaurante"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gerenciamento de Jobs",
+			"item": [
+				{
+					"name": "Listar Todos os Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/jobs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["jobs"]
+						},
+						"description": "Lista todos os trabalhos de impressão"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Jobs por Impressora",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/jobs?printerName=Microsoft Print to PDF",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["jobs"],
+							"query": [
+								{
+									"key": "printerName",
+									"value": "Microsoft Print to PDF"
+								}
+							]
+						},
+						"description": "Lista trabalhos de uma impressora específica"
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Status do Job",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/jobs/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["jobs", "1"]
+						},
+						"description": "Consulta o status de um trabalho específico"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
