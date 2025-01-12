@@ -233,7 +233,7 @@ O serviço inclui tratamento abrangente de erros:
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
+Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ## ✒️ Autor
 
